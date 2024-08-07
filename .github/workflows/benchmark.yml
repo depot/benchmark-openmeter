@@ -265,3 +265,17 @@ jobs:
 
       - name: Wait for worker to become ready
         run: curl --retry 10 --retry-max-time 120 --retry-all-errors http://localhost:10000/healthz
+
+      - name: Run tests
+        uses: dagger/dagger-for-github@29a88e72255e732147ba18a670978b90bcc59efd # v6.4.0
+        with:
+          verb: call
+          args: --source .:default quickstart-test --service tcp://localhost:8888 --port 8888
+          cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
+          version: ${{ env.DAGGER_VERSION }}
+          workdir: upstream
+
+      - name: Cleanup Docker Compose
+        run: docker compose -f docker-compose.yaml -f docker-compose.ci.yaml down -v
+        working-directory: quickstart
+        if: always()
