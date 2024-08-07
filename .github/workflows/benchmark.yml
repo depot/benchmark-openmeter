@@ -131,7 +131,7 @@ jobs:
           args: --ref ${{ github.ref }} lint all
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           version: ${{ env.DAGGER_VERSION }}
-          working-directory: upstream
+          workdir: upstream
 
       - name: Export Dagger Engine logs
         id: export-dagger-engine-logs
