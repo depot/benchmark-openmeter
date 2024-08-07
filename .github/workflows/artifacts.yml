@@ -216,7 +216,7 @@ jobs:
         uses: depot/build-push-action@v1
         with:
           context: upstream
-          file: benthos-collector.Dockerfile
+          file: upstream/benthos-collector.Dockerfile
           build-args: |
             VERSION=${{ fromJSON(steps.meta.outputs.json).labels['org.opencontainers.image.version'] }}
           platforms: linux/amd64,linux/arm64 # The confluent library and UBI8 don't support ARMv7
