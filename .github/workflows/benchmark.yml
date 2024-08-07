@@ -78,7 +78,7 @@ jobs:
           args: --ref ${{ github.ref }} test
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           version: ${{ env.DAGGER_VERSION }}
-          working-directory: upstream
+          workdir: upstream
 
       - name: Export Dagger Engine logs
         id: export-dagger-engine-logs
@@ -232,22 +232,6 @@ jobs:
 
       - name: Dependency Review
         uses: actions/dependency-review-action@5a2ce3f5b92ee19cbb1541a4984c76d921601d7c # v4.3.4
-
-  fossa-scan:
-    name: FOSSA Scan
-    runs-on: depot-ubuntu-latest
-    if: github.event_name == 'push'
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
-        with:
-          submodules: recursive
-
-      - name: Run FOSSA Scan
-        uses: fossas/fossa-action@47ef11b1e1e3812e88dae436ccbd2d0cbd1adab0 # v1.3.3
-        with:
-          api-key: ${{secrets.FOSSA_API_KEY}}
 
   quickstart:
     name: Quickstart
