@@ -31,12 +31,15 @@ jobs:
 
       - name: Prepare Nix shell
         run: nix develop --impure .#ci
+        working-directory: upstream
 
       - name: Build Server
         run: nix develop --impure .#ci -c make build-server
+        working-directory: upstream
 
       - name: Build Sink Worker
         run: nix develop --impure .#ci -c make build-sink-worker
+        working-directory: upstream
 
   test:
     name: Test
