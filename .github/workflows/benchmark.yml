@@ -74,6 +74,7 @@ jobs:
           args: --ref ${{ github.ref }} test
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           version: ${{ env.DAGGER_VERSION }}
+          working-directory: upstream
 
       - name: Export Dagger Engine logs
         id: export-dagger-engine-logs
@@ -124,6 +125,7 @@ jobs:
           args: --ref ${{ github.ref }} lint all
           cloud-token: ${{ secrets.DAGGER_CLOUD_TOKEN }}
           version: ${{ env.DAGGER_VERSION }}
+          working-directory: upstream
 
       - name: Export Dagger Engine logs
         id: export-dagger-engine-logs
@@ -151,9 +153,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Free disk space
-        uses: ./.github/actions/free-disk-space
-
       - name: Set up Nix
         uses: cachix/install-nix-action@ba0dd844c9180cbf77aa72a116d6fbc515d0e87b # v27
         with:
@@ -165,12 +164,15 @@ jobs:
 
       - name: Prepare Nix shell
         run: nix develop --impure .#ci
+        working-directory: upstream
 
       - name: Pre-commit hooks
         run: nix develop --impure .#ci -c pre-commit run -a
+        working-directory: upstream
 
       - name: Check commit messages
         run: nix develop --impure .#ci -c pre-commit run --hook-stage manual
+        working-directory: upstream
 
   dev:
     name: Developer environment
@@ -191,9 +193,11 @@ jobs:
 
       - name: Check
         run: nix flake check --impure
+        working-directory: upstream
 
       - name: Dev shell
         run: nix develop --impure
+        working-directory: upstream
 
   artifacts:
     name: Artifacts
@@ -242,7 +246,7 @@ jobs:
 
       - name: Launch Docker Compose
         run: docker compose -f docker-compose.yaml -f docker-compose.ci.yaml up -d
-        working-directory: quickstart
+        working-directory: upstream/quickstart
 
       - name: Wait for worker to become ready
         run: curl --retry 10 --retry-max-time 120 --retry-all-errors http://localhost:10000/healthz
