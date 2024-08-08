@@ -14,7 +14,7 @@ env:
 jobs:
   build:
     name: Build
-    runs-on: depot-ubuntu-22.04-16
+    runs-on: depot-ubuntu-22.04-32
 
     steps:
       - name: Checkout repository
@@ -45,7 +45,7 @@ jobs:
 
   test:
     name: Test
-    runs-on: depot-ubuntu-22.04-16
+    runs-on: depot-ubuntu-22.04-32
 
     steps:
       # Required as a workaround for Dagger to properly detect Git metadata
@@ -98,7 +98,7 @@ jobs:
 
   lint:
     name: Lint
-    runs-on: depot-ubuntu-22.04-16
+    runs-on: depot-ubuntu-22.04-32
 
     steps:
       # Required as a workaround for Dagger to properly detect Git metadata
@@ -235,7 +235,7 @@ jobs:
 
   quickstart:
     name: Quickstart
-    runs-on: depot-ubuntu-22.04-16
+    runs-on: depot-ubuntu-22.04-32
 
     steps:
       - name: Checkout repository
@@ -261,7 +261,7 @@ jobs:
 
   e2e:
     name: E2E
-    runs-on: depot-ubuntu-22.04-16
+    runs-on: depot-ubuntu-22.04-32
 
     steps:
       # Required as a workaround for Dagger to properly detect Git metadata
@@ -298,7 +298,7 @@ jobs:
 
   dagger:
     name: CI
-    runs-on: depot-ubuntu-22.04-16
+    runs-on: depot-ubuntu-22.04-32
 
     steps:
       # Required as a workaround for Dagger to properly detect Git metadata
