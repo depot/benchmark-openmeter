@@ -7,7 +7,7 @@ on:
 jobs:
   sync:
     name: Sync With Upstream
-    runs-on: depot-ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
